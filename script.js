@@ -5,13 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const message = document.getElementById("h");
   const result = document.getElementById("para");
 
-  // 5 unique image URLs
   const uniqueImages = [
-    "https://picsum.photos/id/237/200/300",          // dog
-    "https://picsum.photos/seed/picsum/200/300",    // random seed
-    "https://picsum.photos/200/300?grayscale",      // grayscale
-    "https://picsum.photos/200/300/",               // another random
-    "https://picsum.photos/200/300.jpg"             // jpg variant
+    "https://picsum.photos/id/237/200/300",          
+    "https://picsum.photos/seed/picsum/200/300",    
+    "https://picsum.photos/200/300?grayscale",      
+    "https://picsum.photos/200/300/",               
+    "https://picsum.photos/200/300.jpg"            
   ];
 
   let clickedTiles = [];
@@ -27,18 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
     verifyBtn.style.display = "none";
     result.textContent = "";
 
-    // pick a random duplicate
     const duplicateIndex = Math.floor(Math.random() * uniqueImages.length);
     const images = [...uniqueImages, uniqueImages[duplicateIndex]];
 
-    // shuffle array
     shuffle(images);
 
-    images.forEach((src) => {
+    images.forEach((src, idx) => {
       const img = document.createElement("img");
       img.src = src;
       img.dataset.src = src;
       img.classList.add("tile");
+      img.classList.add(`img${idx + 1}`);
+
       img.addEventListener("click", () => handleImageClick(img));
       imagesContainer.appendChild(img);
     });
@@ -49,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function handleImageClick(img) {
     if (clickedTiles.length >= 2 || clickedTiles.includes(img)) {
-      return; // prevent selecting more than 2 or the same tile twice
+      return; 
     }
 
     img.classList.add("selected");
@@ -80,6 +79,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // initialize
   setupImages();
 });
